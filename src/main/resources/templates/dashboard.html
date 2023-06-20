@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body id="page-top">
+    <div id="wrapper">
+        <div th:replace="fragments/layout.html :: sidebar"/>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav th:replace="fragments/layout.html :: navbar"/>
+                <div class="page-content container-fluid">
+                    <h3>
+                        Dashboard
+                    </h3>
+                </div>
+            </div>
+        </div>  
+    </div>
+</body>
+</html>
