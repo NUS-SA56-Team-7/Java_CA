@@ -35,3 +35,4 @@ build/
 src/main/resources/application.properties
 .gitignore
 src/main/resources/application.properties
+src/main/java/sg/nus/iss/java/team7/JavaTeam7Application.java
