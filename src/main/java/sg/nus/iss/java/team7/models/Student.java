@@ -1,21 +1,27 @@
 package sg.nus.iss.java.team7.models;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+
+
+
 
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int student_id;
+@DiscriminatorValue("student")
+public class Student extends Account {
 
+    @Override
+    public int getAccount_id() {
+        // TODO Auto-generated method stub
+        return super.getAccount_id();
+    }
+
+    @Override
+    public void setAccount_id(int account_id) {
+        // TODO Auto-generated method stub
+        super.setAccount_id(account_id);
+    }
+    
 }
