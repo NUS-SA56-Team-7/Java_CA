@@ -8,17 +8,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import sg.nus.iss.java.team7.services.PasswordEncoderService;
 
 
 @Entity
 @Inheritance
 @DiscriminatorColumn(name = "account_type")
-
 public abstract class Account {
+    @Autowired
+    PasswordEncoderService encoder;
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int account_id;
+    public Account(String email, String password, String first_name, String last_name, String phone_number) {
+        this.email = email;
+        this.password = encoder.passwordEncoder(password);
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.phone_number = phone_number;
+    }
+
     @Column(columnDefinition="VARCHAR(45) NOT NULL")
     private String email;
     @Column(columnDefinition="VARCHAR(45) NOT NULL")
@@ -45,8 +56,7 @@ public abstract class Account {
     }
 
     public void setPassword(String password) {
-         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodepassword = encoder.encode(password);
+        String encodepassword = encoder.passwordEncoder(password);
         this.password = encodepassword;
     }
 
