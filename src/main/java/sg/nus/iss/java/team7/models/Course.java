@@ -1,6 +1,6 @@
 package sg.nus.iss.java.team7.models;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -35,7 +35,7 @@ public class Course {
     @Column(columnDefinition="VARCHAR(300) NOT NULL")
     private String description;
     private int course_capacity;
-    @Column(name ="course_duration(in_days)")
+    @Column(name ="course_duration_in_days")
     private int course_duration;
     private int course_fee;
     private Date course_start_date;
@@ -48,6 +48,18 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private List<RequestUpdate> requestUpdates;
 
+   
+    public Course(Lecturer lecturer, String course_name, String description, int course_capacity, int course_duration,
+            int course_fee, Date course_start_date, String course_status) {
+        this.lecturer = lecturer;
+        this.course_name = course_name;
+        this.description = description;
+        this.course_capacity = course_capacity;
+        this.course_duration = course_duration;
+        this.course_fee = course_fee;
+        this.course_start_date = course_start_date;
+        this.course_status = course_status;
+    }
     public Lecturer getLecturer() {
         return lecturer;
     }
