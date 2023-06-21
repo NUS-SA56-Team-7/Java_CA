@@ -1,10 +1,6 @@
 package sg.nus.iss.java.team7.models;
 
-<<<<<<< HEAD
-import java.sql.Date;
-=======
 import java.util.Date;
->>>>>>> 1c04c192cdc1f6706905863620e2f4d587920c81
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -20,10 +16,7 @@ import javax.persistence.Transient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-<<<<<<< HEAD
-=======
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
->>>>>>> 1c04c192cdc1f6706905863620e2f4d587920c81
 
 import lombok.NoArgsConstructor;
 import sg.nus.iss.java.team7.services.PasswordEncoderService;
@@ -54,23 +47,14 @@ public abstract class Account {
         this.last_name = last_name;
         this.phone_number = phone_number;
         this.date_of_birth = date_of_birth;
-<<<<<<< HEAD
     }
     @Transient
     public String getAccountType(){
         return getClass().getAnnotation(DiscriminatorValue.class).value();
     }
     @Column(columnDefinition="VARCHAR(45) NOT NULL",unique = true)
-=======
-    }
-    @Transient
-    public String getAccountType(){
-        return getClass().getAnnotation(DiscriminatorValue.class).value();
-    }
-    @Column(columnDefinition="VARCHAR(45) NOT NULL")
->>>>>>> 1c04c192cdc1f6706905863620e2f4d587920c81
     private String email;
-    @Column(columnDefinition="BINARY(60) NOT NULL")
+    @Column(columnDefinition="VARCHAR(60) NOT NULL")
     private String password;
 
     public Long getAccount_id() {

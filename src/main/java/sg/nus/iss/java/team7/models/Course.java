@@ -1,10 +1,6 @@
 package sg.nus.iss.java.team7.models;
 
-<<<<<<< HEAD
-import java.sql.Date;
-=======
 import java.util.Date;
->>>>>>> 1c04c192cdc1f6706905863620e2f4d587920c81
 import java.util.List;
 
 import javax.persistence.Column;
