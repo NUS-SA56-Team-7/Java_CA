@@ -1,5 +1,7 @@
 package sg.nus.iss.java.team7.models;
 
+import java.sql.Date;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -12,21 +14,17 @@ import javax.persistence.Entity;
 @DiscriminatorValue("student")
 public class Student extends Account {
 
-    public Student(String email, String password, String first_name, String last_name, String phone_number) {
-        super(email, password, first_name, last_name, phone_number);
-        //TODO Auto-generated constructor stub
+    public Student(String email, String password, String first_name, String last_name, String phone_number, Date date_of_birth) {
+        super(email, password, first_name, last_name, phone_number, date_of_birth);
+        
     }
-
-    @Override
-    public int getAccount_id() {
-        // TODO Auto-generated method stub
-        return super.getAccount_id();
+    private String matric_number;
+    public String getMatric_number() {
+        return matric_number;
     }
-
-    @Override
-    public void setAccount_id(int account_id) {
-        // TODO Auto-generated method stub
-        super.setAccount_id(account_id);
+    public void setMatric_number(String matric_number) {
+        this.matric_number = matric_number;
     }
+    
     
 }
