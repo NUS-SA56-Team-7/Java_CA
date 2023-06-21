@@ -1,7 +1,10 @@
 package sg.nus.iss.java.team7.models;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +13,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import sg.nus.iss.java.team7.services.PasswordEncoderService;
 
@@ -18,31 +23,39 @@ import sg.nus.iss.java.team7.services.PasswordEncoderService;
 @Inheritance
 @DiscriminatorColumn(name = "account_type")
 public abstract class Account {
-    @Autowired
     @Transient
+    @Autowired
     PasswordEncoderService encoder;
+    
+    protected final void setEncoder(PasswordEncoderService encoder){
+        this.encoder=encoder;
+    }
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int account_id;
-    public Account(String email, String password, String first_name, String last_name, String phone_number) {
+    private Long account_id;
+    public Account(String email, String password, String first_name, String last_name, String phone_number, Date date_of_birth) {
         
         this.email = email;
         this.password = encoder.passwordEncoder(password);
         this.first_name = first_name;
         this.last_name = last_name;
         this.phone_number = phone_number;
+        this.date_of_birth = date_of_birth;
     }
-
-    @Column(columnDefinition="VARCHAR(45) NOT NULL")
+    @Transient
+    public String getAccountType(){
+        return getClass().getAnnotation(DiscriminatorValue.class).value();
+    }
+    @Column(columnDefinition="VARCHAR(45) NOT NULL",unique = true)
     private String email;
     @Column(columnDefinition="BINARY(60) NOT NULL")
     private String password;
 
-    public int getAccount_id() {
+    public Long getAccount_id() {
         return account_id;
     }
 
-    public void setAccount_id(int account_id) {
+    public void setAccount_id(long account_id) {
         this.account_id = account_id;
     }
 
@@ -95,4 +108,10 @@ public abstract class Account {
     
     @Column(columnDefinition="VARCHAR(45) NOT NULL")
     private String phone_number;
+    @Column(columnDefinition = "DATE NOT NULL")
+    private Date date_of_birth;
+    @CreatedDate
+    private Date created_at;
+    @LastModifiedDate
+    private Date updated_at;
 }

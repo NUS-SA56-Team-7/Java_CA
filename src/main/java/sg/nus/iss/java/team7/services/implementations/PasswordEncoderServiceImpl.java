@@ -2,12 +2,13 @@ package sg.nus.iss.java.team7.services.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import sg.nus.iss.java.team7.services.PasswordEncoderService;
-
+@Service
 public class PasswordEncoderServiceImpl implements PasswordEncoderService{
     @Autowired 
-    BCryptPasswordEncoder encoder;
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(-1);
     @Override
     public String passwordEncoder(String password)
     {
