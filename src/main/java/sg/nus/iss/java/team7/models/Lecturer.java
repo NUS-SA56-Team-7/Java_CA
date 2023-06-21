@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.CollectionId;
 
 import lombok.NoArgsConstructor;
 
