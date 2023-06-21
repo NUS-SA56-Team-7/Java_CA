@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
@@ -17,7 +18,9 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("lecturer")
 @NoArgsConstructor
 public class Lecturer extends Account {
-
+@Id
+@Column(name="lecturer_id")
+private long account_id;
 
 public Lecturer(String email, String password, String first_name, String last_name, String phone_number, Date date_of_birth) {
         super(email, password, first_name, last_name, phone_number, date_of_birth);

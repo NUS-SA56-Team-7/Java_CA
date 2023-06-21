@@ -28,7 +28,7 @@ public class Course {
     private long id;
     
     @ManyToOne
-    @JoinColumn(name ="lecturer_id",columnDefinition = "INTEGER NOT NULL")
+    @JoinColumn(name ="lecturer_id",columnDefinition = "BIGINT NOT NULL")
     private Lecturer lecturer;
     @Column(columnDefinition="VARCHAR(45) NOT NULL")
     private String course_name;

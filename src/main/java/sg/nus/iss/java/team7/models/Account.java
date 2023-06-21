@@ -39,7 +39,7 @@ public abstract class Account {
     }
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE)
-    private Long account_id;
+    private long account_id;
     public Account(String email, String password, String first_name, String last_name, String phone_number, Date date_of_birth) {
         
         this.email = email;
