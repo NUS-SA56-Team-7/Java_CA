@@ -1,6 +1,5 @@
 package sg.nus.iss.java.team7.models;
 
-import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -17,37 +16,37 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "student")
+@Table(name = "lecturer")
 @Data
 @EqualsAndHashCode(callSuper=false)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student extends Account {
+public class Lecturer extends Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(columnDefinition = "VARCHAR(15) UNIQUE NOT NULL")
-	private String matric_number;
+	@Column(columnDefinition = "VARCHAR(30) NOT NULL")
+	private String lecturer_first_name;
 
 	@Column(columnDefinition = "VARCHAR(30) NOT NULL")
-	private String first_name;
+	private String lecturer_last_name;
 
-	@Column(columnDefinition = "VARCHAR(30) NOT NULL")
-	private String last_name;
+	@Column(columnDefinition = "VARCHAR(15) NOT NULL")
+	private String lecturer_title;
 
-	@Column(columnDefinition = "VARCHAR(20)")
-	private String phoneNumber;
+	@Column(columnDefinition = "VARCHAR(10) NOT NULL")
+	private String lecturer_code;
+
+	@Column(columnDefinition = "VARCHAR(15) NOT NULL")
+	private String lecturer_designation;
 
 	@Column(columnDefinition = "VARCHAR(1)")
-	private String gender;
+	private String lecturer_gender;
 
-	@Column(columnDefinition = "DATE")
-	private Date date_of_birth;
+	@Column(columnDefinition = "VARCHAR(20)")
+	private String lecturer_phone_number;
 	
-	@OneToMany(targetEntity = CourseStudent.class, mappedBy = "student")
-	private List<CourseStudent> courseStudents;
-	
-	@OneToMany(targetEntity = StudentEnrolment.class, mappedBy = "student")
-	private List<StudentEnrolment> studentEnrolments;
+	@OneToMany(targetEntity = Course.class, mappedBy = "lecturer")
+	private List<Course> courses;
 }

@@ -1,5 +1,5 @@
 package sg.nus.iss.java.team7.services;
 
-public interface CourseService {
+public class AdministratorService {
 
 }
