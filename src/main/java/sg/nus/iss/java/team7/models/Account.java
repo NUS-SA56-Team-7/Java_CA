@@ -18,11 +18,13 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import lombok.NoArgsConstructor;
 import sg.nus.iss.java.team7.services.PasswordEncoderService;
 import sg.nus.iss.java.team7.services.implementations.PasswordEncoderServiceImpl;
 
 
 @Entity
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Inheritance
 @DiscriminatorColumn(name = "account_type")

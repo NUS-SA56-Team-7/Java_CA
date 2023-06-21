@@ -9,12 +9,14 @@ import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import lombok.NoArgsConstructor;
 import sg.nus.iss.java.team7.services.PasswordEncoderService;
 
 
 
 @Entity
 @DiscriminatorValue("admin")
+@NoArgsConstructor
 public class Administrator extends Account {
     @Autowired
     @Transient

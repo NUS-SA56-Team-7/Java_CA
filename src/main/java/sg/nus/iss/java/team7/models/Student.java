@@ -5,6 +5,8 @@ import java.sql.Date;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import lombok.NoArgsConstructor;
+
 
 
 
@@ -12,6 +14,7 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("student")
+@NoArgsConstructor
 public class Student extends Account {
 
     public Student(String email, String password, String first_name, String last_name, String phone_number, Date date_of_birth) {

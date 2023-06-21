@@ -34,6 +34,7 @@ public CommandLineRunner commandLineRunner(AdministratorRepository adminrep, Cou
 		lecturer.setLecturer_title("op");
 		lecturer.setLecturer_designation("meme");
 		lecturer.setLecturer_code("123456");
+		lecRep.save(lecturer);
 		Course course = courseRep.save(new Course(lecturer,"aspel","too Hard",123,1,2123,new Date(234),"Nobody"));
 	};
 }
