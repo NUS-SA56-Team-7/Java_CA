@@ -20,7 +20,7 @@ public class CourseStudentId implements Serializable {
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "course_id")
     private Course course;
 
 }
