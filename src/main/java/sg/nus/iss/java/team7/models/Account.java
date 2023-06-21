@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ import sg.nus.iss.java.team7.services.implementations.PasswordEncoderServiceImpl
 @Entity
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Inheritance
+@Inheritance (strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name = "account_type")
 public abstract class Account {
     @Transient
@@ -37,7 +38,7 @@ public abstract class Account {
         this.encoder=encoder;
     }
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.TABLE)
     private Long account_id;
     public Account(String email, String password, String first_name, String last_name, String phone_number, Date date_of_birth) {
         

@@ -2,6 +2,7 @@ package sg.nus.iss.java.team7.models;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -16,6 +17,7 @@ public class Student extends Account {
         super(email, password, first_name, last_name, phone_number, date_of_birth);
         
     }
+    @Column(columnDefinition = "VARCHAR(50) NOT NULL")
     private String matric_number;
     public String getMatric_number() {
         return matric_number;

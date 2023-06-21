@@ -3,10 +3,13 @@ package sg.nus.iss.java.team7.models;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.CollectionId;
 
 import lombok.NoArgsConstructor;
 
@@ -21,8 +24,11 @@ public Lecturer(String email, String password, String first_name, String last_na
         super(email, password, first_name, last_name, phone_number, date_of_birth);
         
     }
+@Column(columnDefinition = "VARCHAR(50) NOT NULL")
 private String lecturer_title;
+@Column(columnDefinition = "VARCHAR(50) NOT NULL")
 private String lecturer_code;
+@Column(columnDefinition = "VARCHAR(50) NOT NULL")
 private String lecturer_designation;
 @OneToMany
 @JoinColumn(name="id")
