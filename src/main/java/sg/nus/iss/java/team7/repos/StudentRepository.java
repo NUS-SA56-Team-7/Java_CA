@@ -1,5 +1,9 @@
 package sg.nus.iss.java.team7.repos;
 
-public class StudentRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import sg.nus.iss.java.team7.models.Student;
+
+public interface StudentRepository extends JpaRepository<Student, Long> {
 
 }

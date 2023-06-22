@@ -1,5 +1,9 @@
 package sg.nus.iss.java.team7.repos;
 
-public class CourseRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
 
+import sg.nus.iss.java.team7.models.Course;
+
+public interface CourseRepository extends JpaRepository<Course, Long> {
+	public Course findByLecturerId(int id);
 }

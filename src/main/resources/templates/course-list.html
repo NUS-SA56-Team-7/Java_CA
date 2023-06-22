@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+
+<body id="page-top">
+    <div id="wrapper">
+        <div th:replace="fragments/layout.html :: sidebar" />
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav th:replace="fragments/layout.html :: navbar" />
+                <div class="page-content container-fluid">
+                    <!--
+                        INSERT YOUR CODES BELOW THIS.
+                    -->
+                    <h3 class="mb-3">
+                        TItle
+                    </h3>
+                    <!-- ACTION ROW -->
+                    <div class="d-flex justify-content-between mb-3">
+                        <form class="d-none d-sm-inline-block form-inline ml-auto my-2 my-md-0 w-25 mw-100 navbar-search">
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-light small" placeholder="Search for..."
+                                    aria-label="Search" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- DATA GALLERY -->
+                    <div id="gallery">
+                        <div class="row">
+                            <div th:each="course : ${courseList}" class="col-xl-4 col-md-6 mb-4 d-flex align-items-stretch">
+                                <div class="card w-100 border-left-primary shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="h4 mr-2 font-weight-bold text-primary text-uppercase mb-1">
+                                            <span th:text="${course.courseName}"></span>
+                                        </div>
+                                        <div class="course-detail">
+                                            <div class="course-taught d-flex mb-2">
+                                                <span class="text-xs text-gray-700 font-weight-bold mr-1">Taught by: </span>
+                                                <span class="badge badge-pill badge-primary mr-1">Tin</span>
+                                                <span class="badge badge-pill badge-primary mr-1">Cher Wah</span>
+                                            </div>
+                                            <div class="text-s mb-0 text-gray-800">
+                                                <span th:text="${course.description}"></span>
+                                            </div>
+                                        </div> 
+                                        <!-- <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

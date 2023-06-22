@@ -29,6 +29,9 @@
 
     <!-- Custom scripts for all pages-->
     <script th:src="@{/js/script.js}"></script>
+
+    <!-- SWEET ALERTS -->
+    <script th:src="@{https://unpkg.com/sweetalert/dist/sweetalert.min.js}"></script>
 </head>
 
 <body>
@@ -82,7 +85,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Menu:</h6>
-                        <a class="collapse-item" href="cards.html">View Lecturers</a>
+                        <a class="collapse-item" th:href="@{/lecturer/list}">View Lecturers</a>
                     </div>
                 </div>
             </li>
@@ -97,7 +100,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Menu:</h6>
-                        <a class="collapse-item" href="cards.html">View Courses</a>
+                        <a class="collapse-item" th:href="@{/courses}">View Courses</a>
                         <a class="collapse-item" href="buttons.html">Add New Course</a>
                     </div>
                 </div>

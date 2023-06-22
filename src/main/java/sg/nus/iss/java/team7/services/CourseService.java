@@ -1,5 +1,8 @@
 package sg.nus.iss.java.team7.services;
 
-public class CourseService {
+import org.springframework.stereotype.Service;
 
+@Service
+public interface CourseService {
+    
 }

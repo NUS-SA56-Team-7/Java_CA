@@ -38,7 +38,12 @@ body .page-content {
 .btn-blk .btn {
     width: 120px;
 }
+
 .form-control:focus {
     border-color: #bac8f3;
     box-shadow: 0 0 0 0.5px rgba(78, 115, 223, 0.25);
+}
+
+#gallery .border-left-primary {
+    border-left: 0.25rem solid #0066ff !important;
 }
