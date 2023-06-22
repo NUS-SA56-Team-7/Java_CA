@@ -15,12 +15,10 @@ import sg.nus.iss.java.team7.models.Student;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseStudentId implements Serializable {
-    @ManyToOne
-    @JoinColumn(name = "student_id")
+    
     private Student student;
 
-    @ManyToOne
-    @JoinColumn(name = "course_id")
+    
     private Course course;
 
 }

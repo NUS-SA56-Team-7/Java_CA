@@ -1,11 +1,12 @@
 package sg.nus.iss.java.team7.models;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.NoArgsConstructor;
 
@@ -13,9 +14,7 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("student")
 @NoArgsConstructor
 public class Student extends Account {
-    @Id
-    @Column(name="student_id")
-    private long account_id;
+    
     public Student(String email, String password, String first_name, String last_name, String phone_number, Date date_of_birth) {
         super(email, password, first_name, last_name, phone_number, date_of_birth);
         
@@ -28,6 +27,11 @@ public class Student extends Account {
     public void setMatric_number(String matric_number) {
         this.matric_number = matric_number;
     }
+    @OneToMany(mappedBy = "student")
+    private List<StudentEnrolment> studentEnrolment;
+
+    
+
     
     
 }

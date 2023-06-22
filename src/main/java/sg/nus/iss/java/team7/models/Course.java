@@ -47,7 +47,8 @@ public class Course {
     private Date updated_at;
     @OneToMany(mappedBy = "course")
     private List<RequestUpdate> requestUpdates;
-
+    @OneToMany(mappedBy = "course")
+    private List<StudentEnrolment> studentEnrolment;
    
     public Course(Lecturer lecturer, String course_name, String description, int course_capacity, int course_duration,
             int course_fee, Date course_start_date, String course_status) {

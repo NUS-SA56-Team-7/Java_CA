@@ -12,9 +12,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import sg.nus.iss.java.team7.models.Administrator;
+import sg.nus.iss.java.team7.models.Student;
 import sg.nus.iss.java.team7.repos.AdministratorRepository;
 import sg.nus.iss.java.team7.repos.CourseRepository;
 import sg.nus.iss.java.team7.repos.LecturerRepository;
+import sg.nus.iss.java.team7.repos.StudentRepository;
 
 
 @SpringBootApplication
@@ -24,14 +26,6 @@ public class JavaTeam7Application {
 	public static void main(String[] args) {
 		SpringApplication.run(JavaTeam7Application.class, args);
 	}
-@Bean
-public CommandLineRunner commandLineRunner(AdministratorRepository adminrep, CourseRepository courseRep,LecturerRepository lecRep)
-{
-	return args -> {
-		
 
-
-	};
-}
 	
 }

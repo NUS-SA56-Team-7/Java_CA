@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 public class RequestUpdate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long request_update_id;
+    private long request_update_id;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
