@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <body>
+        
+        <table>
+            <tr>
+                <th>Matric Number</th>
+                <th>Name</th>
+            </tr>
+        <tr th:each ="student:${studentList}">
+            <form th:action = "@{/enrolment/form}" method="post">
+            <td th:text="${student.matric_number}">matric_number</td>
+            <td th:text="${student.first_name+' '+student.last_name}">Id</td>
+            <td>
+               
+                <button type="submit" th:name = "matric_number" th:value="${student.matric_number}">Add</button></td>            
+            </td>
+        </form>
+        </tr>
+        </table>
+        <table>
+            <tr>
+                <th>Matric Number</th>
+                <th>Name</th>
+            </tr>
+        <tr th:each = "student:${addStudentList}">
+            <form>
+            <td th:text="${student.matric_number}">matric_number</td>
+            <td th:text="${student.first_name+' '+student.last_name}">Id</td>
+        </form>
+        </tr>
+        </table>
+    </body>
+
+</html>
