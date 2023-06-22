@@ -4,6 +4,8 @@ package sg.nus.iss.java.team7;
 
 
 import java.sql.Date;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import sg.nus.iss.java.team7.models.Administrator;
+import sg.nus.iss.java.team7.models.Course;
+import sg.nus.iss.java.team7.models.Lecturer;
 import sg.nus.iss.java.team7.models.Student;
 import sg.nus.iss.java.team7.repos.AdministratorRepository;
 import sg.nus.iss.java.team7.repos.CourseRepository;
@@ -25,6 +29,14 @@ public class JavaTeam7Application {
 		
 	public static void main(String[] args) {
 		SpringApplication.run(JavaTeam7Application.class, args);
+	}
+	@Bean
+	public CommandLineRunner ckCommandLineRunner(CourseRepository crep, LecturerRepository lecturerRepository,StudentRepository sRepository)
+	{
+		return args -> {
+			
+
+		};
 	}
 
 	

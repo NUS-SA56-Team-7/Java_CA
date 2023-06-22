@@ -15,10 +15,10 @@ import sg.nus.iss.java.team7.models.Student;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseStudentId implements Serializable {
-    
+
     private Student student;
 
-    
+
     private Course course;
 
 }

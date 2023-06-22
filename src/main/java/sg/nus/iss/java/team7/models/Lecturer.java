@@ -29,8 +29,8 @@ private String lecturer_title;
 private String lecturer_code;
 @Column(columnDefinition = "VARCHAR(50) NOT NULL")
 private String lecturer_designation;
-@OneToMany
-@JoinColumn(name="id")
+@OneToMany(mappedBy = "lecturer")
+@Column(name="course_id")
 private List<Course> courses;
 @OneToMany(mappedBy = "lecturer")
 private List<RequestUpdate> requestUpdates;

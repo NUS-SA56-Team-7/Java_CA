@@ -8,13 +8,21 @@
                 <th>Name</th>
             </tr>
         <tr th:each ="student:${studentList}">
-            <form th:action = "@{/enrolment/form}" method="post">
+            <form th:action = "@{/enrolment/form}" method="post" th:object="${student}">
             <td th:text="${student.matric_number}">matric_number</td>
             <td th:text="${student.first_name+' '+student.last_name}">Id</td>
             <td>
-               
-                <button type="submit" th:name = "matric_number" th:value="${student.matric_number}">Add</button></td>            
+                <select th:name = "course_name">
+                    <option th:each = course:${courseList} th:value = ${course.course_name} th:text = ${course.course_name}>
+                        
+                    </option>
+                </select>
             </td>
+            <td>
+               
+                <button type="name" th:name = "matric_number" th:value="${student.matric_number}">Add</button></td>            
+            </td>
+            
         </form>
         </tr>
         </table>
@@ -22,14 +30,22 @@
             <tr>
                 <th>Matric Number</th>
                 <th>Name</th>
+                <th>Course name</th>
+
             </tr>
         <tr th:each = "student:${addStudentList}">
-            <form>
-            <td th:text="${student.matric_number}">matric_number</td>
-            <td th:text="${student.first_name+' '+student.last_name}">Id</td>
+    
+            <td th:text="${student.key.matric_number}">matric_number</td>
+            <td th:text="${student.key.first_name+' '+student.key.last_name}">Id</td>
+            <td th:text="${student.value}"></td>
         </form>
         </tr>
         </table>
+        <form th:action = "@{/enrolment/submit}" method="post">
+            <h3>Date of enrolment</h3>
+            <input type="date" th:name = "date"/>
+            <input type="submit" value="confirm"/>
+        </form>
     </body>
 
 </html>

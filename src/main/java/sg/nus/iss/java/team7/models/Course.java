@@ -3,9 +3,11 @@ package sg.nus.iss.java.team7.models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,9 +30,9 @@ public class Course {
     private long id;
     
     @ManyToOne
-    @JoinColumn(name ="lecturer_id",columnDefinition = "BIGINT NOT NULL")
+    @JoinColumn(name ="lecturer_id",columnDefinition = "BIGINT")
     private Lecturer lecturer;
-    @Column(columnDefinition="VARCHAR(45) NOT NULL")
+    @Column(columnDefinition="VARCHAR(45) NOT NULL",unique = true)
     private String course_name;
     @Column(columnDefinition="VARCHAR(300) NOT NULL")
     private String description;
@@ -47,7 +49,7 @@ public class Course {
     private Date updated_at;
     @OneToMany(mappedBy = "course")
     private List<RequestUpdate> requestUpdates;
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<StudentEnrolment> studentEnrolment;
    
     public Course(Lecturer lecturer, String course_name, String description, int course_capacity, int course_duration,
