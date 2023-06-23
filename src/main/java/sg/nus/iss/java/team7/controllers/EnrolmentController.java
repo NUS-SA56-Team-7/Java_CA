@@ -61,7 +61,7 @@ public class EnrolmentController {
        return new ModelAndView("enrolment");
         
     }
-
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping("/form")
     private String enrolStudent(@ModelAttribute("course_name") String course_name,@ModelAttribute("matric_number") String matric_number,HttpSession session){
         HashMap<Student, String> students = (HashMap<Student,String>) session.getAttribute("studentlist");
@@ -88,7 +88,6 @@ public class EnrolmentController {
     private String submitStudentEnrolment(@ModelAttribute("date") String date,HttpSession session) throws ParseException{
         
         List<StudentEnrolment> studentEnrolments = (List<StudentEnrolment>) session.getAttribute("studentenrolment");
-        DateTimeFormatter formater = DateTimeFormatter.ofPattern("dd-MM-yy");
         SimpleDateFormat localDate = new SimpleDateFormat("dd-MM-yy");
         Date date2 = localDate.parse(date);
         studentEnrolmentService.commitAllStudentEnrolment(studentEnrolments,date2) ;

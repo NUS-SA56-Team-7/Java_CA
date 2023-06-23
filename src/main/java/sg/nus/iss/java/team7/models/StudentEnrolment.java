@@ -22,17 +22,16 @@ import lombok.NoArgsConstructor;
 import sg.nus.iss.java.team7.models.keys.CourseStudentId;
 
 @Entity
-@IdClass(CourseStudentId.class)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentEnrolment {
-    @Id
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    
+    @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
-    @Id
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    
+    @ManyToOne
     @JoinColumn(name = "course_Id")
     private Course course;
     @Id
@@ -47,5 +46,5 @@ public class StudentEnrolment {
         this.course = course;
         this.enrolment_date = enrolment_date;
         this.status = status;
-    }
+    }   
 }

@@ -19,8 +19,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Student extends Account {
     
-    public Student(String email, String password, String first_name, String last_name, String phone_number, Date date_of_birth) {
+    public Student(String email, String password, String first_name, String last_name, String phone_number, Date date_of_birth, String matric_number) {
         super(email, password, first_name, last_name, phone_number, date_of_birth);
+        this.matric_number = matric_number;
         
     }
     @Column(columnDefinition = "VARCHAR(50) NOT NULL")

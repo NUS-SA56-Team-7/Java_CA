@@ -2,8 +2,6 @@ package sg.nus.iss.java.team7.models.keys;
 
 import java.io.Serializable;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

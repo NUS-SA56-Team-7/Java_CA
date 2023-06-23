@@ -19,8 +19,11 @@ import lombok.NoArgsConstructor;
 public class Lecturer extends Account {
 
 
-public Lecturer(String email, String password, String first_name, String last_name, String phone_number, Date date_of_birth) {
+public Lecturer(String email, String password, String first_name, String last_name, String phone_number, Date date_of_birth,String lecturer_title,String lecture_code, String lecturer_designation) {
         super(email, password, first_name, last_name, phone_number, date_of_birth);
+        this.lecturer_code = lecture_code;
+        this.lecturer_designation = lecturer_designation;
+        this.lecturer_title = lecturer_title;
         
     }
 @Column(columnDefinition = "VARCHAR(50) NOT NULL")
