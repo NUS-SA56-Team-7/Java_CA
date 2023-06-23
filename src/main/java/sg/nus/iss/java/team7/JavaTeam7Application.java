@@ -37,8 +37,7 @@ public class JavaTeam7Application {
 	{
 		return args -> {
 			
-			serep.save(new StudentEnrolment(sRepository.findById((long) 1).get(), crep.findById((long) 1).get(), new Date(0), "1234"));
-			
+			serep.save(new StudentEnrolment(sRepository.findById((long) 1).get(),crep.findById((long) 1).get(),new java.util.Date(1), "1234"));
 
 		};
 	}

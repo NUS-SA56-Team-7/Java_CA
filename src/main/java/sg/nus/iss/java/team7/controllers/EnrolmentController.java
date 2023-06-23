@@ -49,7 +49,7 @@ public class EnrolmentController {
     @Autowired
     private StudentEnrolmentService studentEnrolmentService;
     @GetMapping("/form")
-    private ModelAndView enrolStudentForm(Model model,HttpSession session)
+    private ModelAndView enrolStudentForm(@ModelAttribute("matric_number") String matString,Model model,HttpSession session)
     {
         if(session.getAttribute("studentlist") == null)
         {
@@ -61,7 +61,7 @@ public class EnrolmentController {
        return new ModelAndView("enrolment");
         
     }
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    
     @PostMapping("/form")
     private String enrolStudent(@ModelAttribute("course_name") String course_name,@ModelAttribute("matric_number") String matric_number,HttpSession session){
         HashMap<Student, String> students = (HashMap<Student,String>) session.getAttribute("studentlist");
@@ -83,7 +83,7 @@ public class EnrolmentController {
         
         return "redirect:/enrolment/form";
     }
-    @ResponseStatus(HttpStatus.ACCEPTED)
+
     @PostMapping("/submit")
     private String submitStudentEnrolment(@ModelAttribute("date") String date,HttpSession session) throws ParseException{
         
@@ -94,7 +94,7 @@ public class EnrolmentController {
         session.setAttribute("studentenrolment", null);
         session.setAttribute("studentlist", null);
         
-        return "enrolment";
+        return "redirect:/enrolment/form";
     }
     
 }

@@ -66,6 +66,12 @@ public class Course {
     public Lecturer getLecturer() {
         return lecturer;
     }
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
     public void setLecturer(Lecturer lecturer) {
         this.lecturer = lecturer;
     }
