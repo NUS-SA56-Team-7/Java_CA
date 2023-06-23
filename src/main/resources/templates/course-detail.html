@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+
+<body id="page-top">
+    <div id="wrapper">
+        <div th:replace="fragments/layout.html :: sidebar" />
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav th:replace="fragments/layout.html :: navbar" />
+                <div class="page-content container-fluid" th:object="${course}">
+                    <!--
+                        INSERT YOUR CODES BELOW THIS.
+                    -->
+                    <h2 class="mb-3 manage-form-ttl">
+                        <span th:text="${course.courseName}" />
+                    </h2>
+                    <div class="course-content row">
+                        <div class="col-8">
+                            <div class="card o-hidden border-0 shadow-lg mb-3">
+                                <div class="card-body p-0">
+                                    <div class="login-card-body">
+                                        <div class="text-left">
+                                            <div class="mb-3 text-lg font-weight-bold border-bottom">
+                                                Description
+                                            </div>
+                                            <div class="mb-4">
+                                                <span th:text="${course.description}" />
+                                            </div>
+                                        </div>
+                                        <div class="course-overview">
+                                            <div class="mb-3 text-lg font-weight-bold border-bottom">
+                                                Overview
+                                            </div>
+                                            <div class="course-info">
+                                                <!-- DATA TABLE -->
+                                                <table class="table border">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="w-25 border-right bg-light">Next Intake</th>
+                                                            <td class="w-75" th:text="${course.courseStartDate}"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="w-25 border-right bg-light">Fees</th>
+                                                            <td class="w-75" th:text="${course.courseFee}"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="w-25 border-right bg-light">Duration</th>
+                                                            <td class="w-75" th:text="${course.courseDuration}"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="w-25 border-right bg-light">Capacity</th>
+                                                            <td class="w-75" th:text="${course.courseCapacity}"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="w-25 border-right bg-light">Course Credits</th>
+                                                            <td class="w-75" th:text="${course.courseCredits}"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="w-25 border-right bg-light">Status</th>
+                                                            <td class="w-75"th:switch="${course.courseStatus}">
+                                                                <span th:case=0>Available</span>
+                                                                <span th:case=1>Low Vacancy</span>
+                                                                <span th:case=2>Full</span>
+                                                                <span th:case=3>ENROLLMENT CLOSED</span>
+                                                                <span th:case=4>ONGOING</span>
+                                                                <span th:case=5>COMPLETED</span>
+                                                                <span th:case=6>UPCOMING</span>
+                                                                <span th:case=7>CANCELLED</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <a th:href="@{/course/list}" class="btn btn-outline-danger w-25">
+                                    Back
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card o-hidden shadow-lg mb-5">
+                                <div class="card-body p-0">
+                                    <div class="login-card-body">
+                                        <div class="text-left">
+                                            <div class="mb-2">
+                                                <span class="mr-1 text-s font-weight-bold">
+                                                    Lecturer:
+                                                </span>
+                                                <span th:text="${course.lecturer.firstName}" />
+                                            </div>
+                                            <div class="mb-4">
+                                                <span class="mr-1 text-s font-weight-bold">
+                                                    Enroll for:
+                                                </span>
+                                                <span th:text="${course.courseStartDate}" />
+                                            </div>
+                                            <a href="" class="btn btn-primary w-100">
+                                                Enroll
+                                            </a>
+                                            <a href="" class="btn btn-secondary w-100 disabled text-uppercase" disabled>
+                                                Enrolment Closed
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

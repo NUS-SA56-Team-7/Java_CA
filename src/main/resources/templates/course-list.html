@@ -14,7 +14,7 @@
                         INSERT YOUR CODES BELOW THIS.
                     -->
                     <h3 class="mb-3">
-                        TItle
+                        Courses
                     </h3>
                     <!-- ACTION ROW -->
                     <div class="d-flex justify-content-between mb-3">
@@ -33,19 +33,18 @@
                     <!-- DATA GALLERY -->
                     <div id="gallery">
                         <div class="row">
-                            <div th:each="course : ${courseList}" class="col-xl-4 col-md-6 mb-4 d-flex align-items-stretch">
-                                <div class="card w-100 border-left-primary shadow h-100 py-2">
-                                    <div class="card-body">
+                            <div th:each="course : ${courseList}" id="course-list" class="col-xl-4 col-md-6 mb-4 d-flex align-items-stretch">
+                                <a th:href="@{/course/detail/} + ${course.id}" class="card course-card w-100 border-left-primary shadow h-100 py-2">
+                                    <div class="card-body pb-2">
                                         <div class="h4 mr-2 font-weight-bold text-primary text-uppercase mb-1">
-                                            <span th:text="${course.courseName}"></span>
+                                            <span class="course-name" th:text="${course.courseName}"></span>
                                         </div>
                                         <div class="course-detail">
                                             <div class="course-taught d-flex mb-2">
                                                 <span class="text-xs text-gray-700 font-weight-bold mr-1">Taught by: </span>
                                                 <span class="badge badge-pill badge-primary mr-1">Tin</span>
-                                                <span class="badge badge-pill badge-primary mr-1">Cher Wah</span>
                                             </div>
-                                            <div class="text-s mb-0 text-gray-800">
+                                            <div class="text-s mb-0 text-gray-800 mb-2">
                                                 <span th:text="${course.description}"></span>
                                             </div>
                                         </div> 
@@ -53,7 +52,7 @@
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                         </div> -->
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>

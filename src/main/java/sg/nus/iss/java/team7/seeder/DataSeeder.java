@@ -29,10 +29,10 @@ public class DataSeeder {
 
     @PostConstruct
     public void seedData() {
-        List<Lecturer> lecturers = createDummyLecturers();
+        // List<Lecturer> lecturers = createDummyLecturers();
         // List<Course> courses = createDummyCourses();
 
-        lecturerRepository.saveAll(lecturers);
+        // lecturerRepository.saveAll(lecturers);
         // courseRepository.saveAll(courses);
     }
 

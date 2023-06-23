@@ -69,3 +69,14 @@ form.user .btn-user {
     font-size: 8rem;
     line-height: 1;
 }
+
+#course-list .card:hover {
+    box-shadow: 0 4px 10px rgba(0, 102, 255, .35) !important;
+    cursor: pointer;
+}
+#course-list a:hover {
+    text-decoration: none;
+}
+#course-list a:hover .course-name {
+    text-decoration: underline;
+}

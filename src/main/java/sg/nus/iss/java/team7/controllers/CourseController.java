@@ -32,8 +32,8 @@ import sg.nus.iss.java.team7.services.StudentService;
 @RequestMapping(path = "/course")
 public class CourseController {
 
-    @Autowired
-    private CourseService svcCourse;
+    // @Autowired
+    // private CourseService svcCourse;
 
     @Autowired
     private LecturerService svcLecturer;
@@ -46,6 +46,13 @@ public class CourseController {
         List<Course> allCourses = courseRepository.findAll();
         model.addAttribute("courseList", allCourses);
         return "course-list";
+    }
+
+    @GetMapping("/detail/{id}")
+    public String getCourseDetail(@PathVariable("id") Long id, Model model) {
+        Course course = courseRepository.findById(id).orElseThrow(null);
+        model.addAttribute("course", course);
+        return "course-detail";
     }
 
     // @GetMapping("/courses/create")
