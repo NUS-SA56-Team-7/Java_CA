@@ -88,7 +88,7 @@ public class EnrolmentController {
     private String submitStudentEnrolment(@ModelAttribute("date") String date,HttpSession session) throws ParseException{
         
         List<StudentEnrolment> studentEnrolments = (List<StudentEnrolment>) session.getAttribute("studentenrolment");
-        SimpleDateFormat localDate = new SimpleDateFormat("dd-MM-yy");
+        SimpleDateFormat localDate = new SimpleDateFormat("yyyy-MM-dd");
         Date date2 = localDate.parse(date);
         studentEnrolmentService.commitAllStudentEnrolment(studentEnrolments,date2) ;
         session.setAttribute("studentenrolment", null);
