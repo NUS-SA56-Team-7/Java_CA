@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/header.html :: html_head" />
+
+<body>
+    <div class="container">
+        <h2>Course Detail</h2>
+        <p th:text="'Name : ' + ${course.courseName}"></p>
+        <p th:text="'Lecturer Name : ' + ${lecturerName}"></p>
+        <p th:text="'Description : ' + ${course.description}"></p>
+        <p th:text="'Capacity : ' + ${course.courseCapacity} + ' People'"></p>
+        <p th:text="'Course Start Date : ' + ${course.courseStartDate}"></p>
+        <p th:text="'Duration : ' + ${course.courseDuration} + ' Months'"></p>
+        <p th:text="'Fees : ' + ${course.courseFee} + ' SGD'"></p>
+        <p th:text="'Enrolment Start Date : ' + ${enrolmentStartDate}"></p>
+        <p th:text="'Enrolment End Date : ' + ${enrolmentEndDate}"></p>
+
+        <form th:if="${(today > enrolmentStartDate) and (today < enrolmentEndDate)}" th:object="${enrolment}" th:action="@{/student/} + ${studentId} + @{/course/} + ${course.id}" th:method="post">
+            <input type="hidden" name="enrolmentDate" th:value="${today}" th:format="'yyyy-MM-dd'">
+            <input type="submit" th:value="'Enroll Course'">
+        </form>
+    </div>
+</body>
+
+</html>

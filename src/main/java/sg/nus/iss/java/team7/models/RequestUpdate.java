@@ -26,15 +26,18 @@ public class RequestUpdate {
 	private Long id;
 
 	@ManyToOne
-	@MapsId("course_id")
+	@MapsId("courseId")
 	@JsonIgnore
 	private Course course;
 	
 	@ManyToOne
-	@MapsId("lecturer_id")
+	@MapsId("lecturerId")
 	@JsonIgnore
 	private Lecturer lecturer;
 	
 	@Column(columnDefinition = "VARCHAR(255) NOT NULL")
 	private String reason;
+
+	@Column(columnDefinition = "TINYINT")
+	private Integer status = 1;
 }

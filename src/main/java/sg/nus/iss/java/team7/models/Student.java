@@ -28,22 +28,22 @@ public class Student extends Account {
 	private Long id;
 
 	@Column(columnDefinition = "VARCHAR(15) UNIQUE NOT NULL")
-	private String matric_number;
+	private String matricNumber;
 
 	@Column(columnDefinition = "VARCHAR(30) NOT NULL")
-	private String first_name;
+	private String firstName;
 
 	@Column(columnDefinition = "VARCHAR(30) NOT NULL")
-	private String last_name;
+	private String lastName;
 
 	@Column(columnDefinition = "VARCHAR(20)")
 	private String phoneNumber;
 
-	@Column(columnDefinition = "VARCHAR(1)")
+	@Column(columnDefinition = "VARCHAR(10)")
 	private String gender;
 
 	@Column(columnDefinition = "DATE")
-	private Date date_of_birth;
+	private Date dateOfBirth;
 	
 	@OneToMany(targetEntity = CourseStudent.class, mappedBy = "student")
 	private List<CourseStudent> courseStudents;

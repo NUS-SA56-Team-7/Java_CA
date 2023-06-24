@@ -20,9 +20,9 @@ public class Account {
 	private String password;
 
 	@JsonSerialize(using = OffsetDateTimeSerializer.class)
-	private OffsetDateTime created_at;
+	private OffsetDateTime createdAt;
 
 	@JsonSerialize(using = OffsetDateTimeSerializer.class)
-	private OffsetDateTime updated_at;
+	private OffsetDateTime updatedAt;
 	
 }

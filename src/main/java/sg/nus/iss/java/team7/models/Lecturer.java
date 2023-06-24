@@ -27,25 +27,25 @@ public class Lecturer extends Account {
 	private Long id;
 
 	@Column(columnDefinition = "VARCHAR(30) NOT NULL")
-	private String lecturer_first_name;
+	private String lecturerFirstName;
 
 	@Column(columnDefinition = "VARCHAR(30) NOT NULL")
-	private String lecturer_last_name;
+	private String lecturerLastName;
 
 	@Column(columnDefinition = "VARCHAR(15) NOT NULL")
-	private String lecturer_title;
+	private String lecturerTitle;
 
 	@Column(columnDefinition = "VARCHAR(10) NOT NULL")
-	private String lecturer_code;
+	private String lecturerCode;
 
 	@Column(columnDefinition = "VARCHAR(15) NOT NULL")
-	private String lecturer_designation;
+	private String lecturerDesignation;
 
-	@Column(columnDefinition = "VARCHAR(1)")
-	private String lecturer_gender;
+	@Column(columnDefinition = "VARCHAR(10)")
+	private String lecturerGender;
 
 	@Column(columnDefinition = "VARCHAR(20)")
-	private String lecturer_phone_number;
+	private String lecturerPhoneNumber;
 	
 	@OneToMany(targetEntity = Course.class, mappedBy = "lecturer")
 	private List<Course> courses;

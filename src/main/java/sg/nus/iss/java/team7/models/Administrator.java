@@ -24,5 +24,5 @@ public class Administrator extends Account {
 	private Long id;
 
 	@Column(columnDefinition = "VARCHAR(30) NOT NULL")
-	private String admin_name;
+	private String adminName;
 }

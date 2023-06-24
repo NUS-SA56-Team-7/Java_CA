@@ -1,43 +1,49 @@
 package sg.nus.iss.java.team7.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import sg.nus.iss.java.team7.models.keys.CourseStudentId;
 
 @Entity
-@Table(name = "studentenrolment")
+@Table(name = "studentenrolment", uniqueConstraints = {@UniqueConstraint(columnNames = {"course_id", "student_id"})})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentEnrolment {
-	@EmbeddedId
-	private CourseStudentId id = new CourseStudentId();
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
 	@ManyToOne
-	@MapsId("course_id")
+	@JoinColumn(name = "course_id")
 	@JsonIgnore
 	private Course course;
 	
 	@ManyToOne
-	@MapsId("student_id")
+	@JoinColumn(name = "student_id")
 	@JsonIgnore
 	private Student student;
 	
 	@Column(columnDefinition = "Date")
-	private Date enrolment_date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate enrolmentDate;
 
-	@Column(columnDefinition = "VARCHAR(1)")
-	private String status;
+	@Column(columnDefinition = "TINYINT")
+	private Integer status = 1;
 }

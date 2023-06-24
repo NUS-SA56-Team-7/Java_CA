@@ -1,6 +1,6 @@
 package sg.nus.iss.java.team7.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,25 +29,25 @@ public class Course {
 	private Long id;
 
 	@Column(columnDefinition = "NVARCHAR(50) UNIQUE NOT NULL")
-	private String course_name;
+	private String courseName;
 
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String description;
 
 	@Column(columnDefinition = "TINYINT NOT NULL")
-	private Integer course_capacity;
+	private Integer courseCapacity;
 
 	@Column(columnDefinition = "TINYINT NOT NULL")
-	private Integer course_duration;
+	private Integer courseDuration;
 
-	@Column(columnDefinition = "TINYINT NOT NULL")
-	private Integer course_fee;
+	@Column(columnDefinition = "INT NOT NULL")
+	private Integer courseFee;
 
 	@Column(columnDefinition = "DATE NOT NULL")
-	private Date course_start_date;
+	private LocalDate courseStartDate;
 
-	@Column(columnDefinition = "VARCHAR(1)")
-	private String course_status;
+	@Column(columnDefinition = "TINYINT")
+	private Integer courseStatus = 0;
 	
 	@OneToMany(targetEntity = CourseStudent.class, mappedBy = "course")
 	private List<CourseStudent> courseStudents;
@@ -55,6 +56,29 @@ public class Course {
 	private List<StudentEnrolment> studentEnrolments;
 	
 	@ManyToOne
-	@JoinColumn(name = "lecturer_id")
+	@JoinColumn(name = "lecturerId")
 	private Lecturer lecturer;
+
+	/***
+	    0 = AVAILABLE
+	    1 = LOW_VACANCY
+	    2 = FULL
+	    3 = ENROLLMENT_CLOSED
+	    4 = ONGOING
+	    5 = COMPLETED
+	    6 = UPCOMING
+	    7 = CANCELLED
+    ***/
+
+	@Transient
+	private LocalDate courseEndDate;
+
+	@Transient
+	private LocalDate enrolmentStartDate;
+
+	@Transient
+	private LocalDate enrolmentEndDate;
+	
+	@Transient
+	private Long courseVacancy;
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/header.html :: html_head" />
+
+<body>
+    <div class="container">
+        <h2>All Attending Courses</h2>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Description</th>
+                    <th>Course Fees</th>
+                    <th>Course Start Date</th>
+                    <th>Course Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="course: ${courseList}">
+                    <td th:text="${course.courseName}"></td>
+                    <td th:text="${course.description}"></td>
+                    <td th:text="${course.courseFee}"></td>
+                    <td th:text="${course.courseStartDate}"></td>
+                    <td th:text="${course.courseStatus}"></td>
+                    <td>
+                        <a th:href="@{/student/}+${studentId}+@{/course/}+${course.id}"><span>View Course</span></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
