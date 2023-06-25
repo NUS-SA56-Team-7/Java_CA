@@ -21,7 +21,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.NoArgsConstructor;
 import sg.nus.iss.java.team7.services.PasswordEncoderService;
-import sg.nus.iss.java.team7.services.implementations.PasswordEncoderServiceImpl;
 
 
 @Entity
@@ -32,7 +31,7 @@ import sg.nus.iss.java.team7.services.implementations.PasswordEncoderServiceImpl
 public abstract class Account {
     @Transient
     @Autowired
-    protected PasswordEncoderService encoder = new PasswordEncoderServiceImpl();
+    protected PasswordEncoderService encoder;
     
     protected final void setEncoder(PasswordEncoderService encoder){
         this.encoder=encoder;
@@ -122,78 +121,6 @@ public abstract class Account {
     @LastModifiedDate
     protected Date updated_at;
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((encoder == null) ? 0 : encoder.hashCode());
-        result = prime * result + (int) (account_id ^ (account_id >>> 32));
-        result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + ((password == null) ? 0 : password.hashCode());
-        result = prime * result + ((first_name == null) ? 0 : first_name.hashCode());
-        result = prime * result + ((last_name == null) ? 0 : last_name.hashCode());
-        result = prime * result + ((phone_number == null) ? 0 : phone_number.hashCode());
-        result = prime * result + ((date_of_birth == null) ? 0 : date_of_birth.hashCode());
-        result = prime * result + ((created_at == null) ? 0 : created_at.hashCode());
-        result = prime * result + ((updated_at == null) ? 0 : updated_at.hashCode());
-        return result;
-    }
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Account other = (Account) obj;
-        if (encoder == null) {
-            if (other.encoder != null)
-                return false;
-        } else if (!encoder.equals(other.encoder))
-            return false;
-        if (account_id != other.account_id)
-            return false;
-        if (email == null) {
-            if (other.email != null)
-                return false;
-        } else if (!email.equals(other.email))
-            return false;
-        if (password == null) {
-            if (other.password != null)
-                return false;
-        } else if (!password.equals(other.password))
-            return false;
-        if (first_name == null) {
-            if (other.first_name != null)
-                return false;
-        } else if (!first_name.equals(other.first_name))
-            return false;
-        if (last_name == null) {
-            if (other.last_name != null)
-                return false;
-        } else if (!last_name.equals(other.last_name))
-            return false;
-        if (phone_number == null) {
-            if (other.phone_number != null)
-                return false;
-        } else if (!phone_number.equals(other.phone_number))
-            return false;
-        if (date_of_birth == null) {
-            if (other.date_of_birth != null)
-                return false;
-        } else if (!date_of_birth.equals(other.date_of_birth))
-            return false;
-        if (created_at == null) {
-            if (other.created_at != null)
-                return false;
-        } else if (!created_at.equals(other.created_at))
-            return false;
-        if (updated_at == null) {
-            if (other.updated_at != null)
-                return false;
-        } else if (!updated_at.equals(other.updated_at))
-            return false;
-        return true;
-    }
+    
+    
 }

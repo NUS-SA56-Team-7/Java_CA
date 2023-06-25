@@ -36,3 +36,5 @@ src/main/resources/application.properties
 .gitignore
 src/main/resources/application.properties
 src/main/java/sg/nus/iss/java/team7/JavaTeam7Application.java
+src/main/java/sg/nus/iss/java/team7/configs/DataSourceconfig.java
+src/main/java/sg/nus/iss/java/team7/configs/WebSecurityConfig.java
