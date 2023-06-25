@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/header.html :: html_head" />
+
+<body>
+    <div class="container">
+        <h2>Course Detail</h2>
+        <p th:text="'Name : ' + ${course.courseName}"></p>
+        <p th:text="'Description : ' + ${course.description}"></p>
+        <p th:text="'Capacity : ' + ${course.courseCapacity} + ' People'"></p>
+        <p th:text="'Course Start Date : ' + ${course.courseStartDate}"></p>
+        <p th:text="'Duration : ' + ${course.courseDuration} + ' Months'"></p>
+        <p th:text="'Fees : ' + ${course.courseFee} + ' SGD'"></p>
+        <p th:text="'Enrolment Start Date : ' + ${enrolmentStartDate}"></p>
+        <p th:text="'Enrolment End Date : ' + ${enrolmentEndDate}"></p>
+
+        <a th:href="@{/lecturer/}+${lecturerId}+@{/course/}+${course.id}+@{/requestUpdate}"><span>Request Update</span></a>
+    </div>
+
+    <div class="container">
+        <h2>All Enrolled Students</h2>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Matric Number</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="student: ${studentList}">
+                    <td th:text="${student.firstName} + ' ' + ${student.lastName}"></td>
+                    <td th:text="${student.matricNumber}"></td>
+                    <td th:text="${student.email}"></td>
+                    <td th:text="${student.phoneNumber}"></td>
+                    <td>
+                        <a th:href="@{/lecturer/}+${lecturerId}+@{/course/}+${course.id}+@{/student/}+${student.id}+@{/grade}"><span>Grade</span></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

@@ -5,8 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,12 +26,12 @@ public class RequestUpdate {
 	private Long id;
 
 	@ManyToOne
-	@MapsId("courseId")
+	@JoinColumn(name = "course_id")
 	@JsonIgnore
 	private Course course;
 	
 	@ManyToOne
-	@MapsId("lecturerId")
+	@JoinColumn(name = "lecturer_id")
 	@JsonIgnore
 	private Lecturer lecturer;
 	

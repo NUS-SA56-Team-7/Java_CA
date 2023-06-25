@@ -54,6 +54,9 @@ public class Course {
 	
 	@OneToMany(targetEntity = StudentEnrolment.class, mappedBy = "course")
 	private List<StudentEnrolment> studentEnrolments;
+
+	@OneToMany(targetEntity = RequestUpdate.class, mappedBy = "course")
+	private List<RequestUpdate> requestUpdates;
 	
 	@ManyToOne
 	@JoinColumn(name = "lecturerId")

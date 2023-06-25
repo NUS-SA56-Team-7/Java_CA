@@ -49,12 +49,15 @@ public class StudentController {
 		LocalDate enrolmentStartDate = course.getCourseStartDate().minusDays(30);
 		LocalDate enrolmentEndDate = course.getCourseStartDate().minusDays(10);
 
+		Boolean checkEnrolled = studentEnrolmentService.checkEnrolled(studentId, courseId);
+
 		model.addAttribute("studentId", studentId);
 		model.addAttribute("course", course);
 		model.addAttribute("lecturerName", lecturerName);
 		model.addAttribute("today", today);
 		model.addAttribute("enrolmentStartDate", enrolmentStartDate);
 		model.addAttribute("enrolmentEndDate", enrolmentEndDate);
+		model.addAttribute("checkEnrolled", checkEnrolled);
 		model.addAttribute("enrolment", new StudentEnrolment());
 		return "student/course-detail";
 	}

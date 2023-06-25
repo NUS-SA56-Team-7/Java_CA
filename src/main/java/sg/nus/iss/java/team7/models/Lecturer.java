@@ -49,4 +49,7 @@ public class Lecturer extends Account {
 	
 	@OneToMany(targetEntity = Course.class, mappedBy = "lecturer")
 	private List<Course> courses;
+
+	@OneToMany(targetEntity = RequestUpdate.class, mappedBy = "lecturer")
+	private List<RequestUpdate> requestUpdates;
 }

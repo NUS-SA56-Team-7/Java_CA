@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/header.html :: html_head" />
+
+<body>
+    <div class="container">
+        <h2>Request Course Update</h2>
+        <form th:object="${requestUpdate}" th:action="@{/lecturer/} + ${lecturer.id} + @{/course/} + ${course.id} + @{/requestUpdate}" th:method="post" class="form-group">
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-md-6">
+                    <Label>Course Name</Label>
+                    <input class="form-control" type="text" th:value="${course.courseName}" disabled>
+                </div>
+                <div class="col-md-6">
+                    <Label>Lecturer Name</Label>
+                    <input class="form-control" type="text" th:value="${lecturer.lecturerFirstName} + ' ' + ${lecturer.lecturerLastName}" disabled>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-md-12">
+                    <Label>Reason of Update</Label>
+                    <textarea class="form-control" name="reason" th:value="${reason}" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+            <input class="form-control" type="submit" th:value="'Request'">
+        </form>
+    </div>
+</body>
+
+</html>
