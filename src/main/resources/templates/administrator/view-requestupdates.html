@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts/header.html :: html_head" />
+
+<body>
+    <div class="container">
+        <h2>All Request Updates</h2>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Course Name</th>
+                    <th>Lecturer Name</th>
+                    <th>Reason</th>
+                    <th colspan="2" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="requestupdate: ${requestUpdateList}">
+                    <td th:text="${requestupdate.id}"></td>
+                    <td th:text="${requestupdate.course.courseName}"></td>
+                    <td th:text="${requestupdate.lecturer.lecturerFirstName} + ' ' + ${requestupdate.lecturer.lecturerLastName}"></td>
+                    <td th:text="${requestupdate.reason}"></td>
+                    <td>
+                        <!-- <a th:href="@{/lecturer/}+${requestupdate.lecturer.id}+@{/course/}+${requestupdate.course.id}"><span>View Course Detail</span></a> -->
+                        <a><span>View Course Detail</span></a>
+                    </td>
+                    <td>
+                        <!-- <a th:href="@{/lecturer/}+${lecturerId}+@{/course/}+${course.id}"><span>Approve Request</span></a> -->
+                        <a><span>Approve Request</span></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

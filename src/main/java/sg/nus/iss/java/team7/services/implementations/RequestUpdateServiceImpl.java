@@ -1,5 +1,7 @@
 package sg.nus.iss.java.team7.services.implementations;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,12 @@ public class RequestUpdateServiceImpl implements RequestUpdateService {
     public RequestUpdate requestCourseUpdate(RequestUpdate requestUpdate) {
         requestUpdateRepository.saveAndFlush(requestUpdate);
         return requestUpdate;
+    }
+
+    @Override
+    public List<RequestUpdate> getRequestUpdates() {
+        List<RequestUpdate> allRequestUpdate = requestUpdateRepository.findAll();
+        return allRequestUpdate;
     }
     
 }
