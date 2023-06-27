@@ -1,12 +1,10 @@
 package team7.models;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -63,7 +61,7 @@ public class Course {
 	
 	@Column(columnDefinition = "SMALLINT NOT NULL")
 	@NotNull(message = "Course Fee must not be empty")
-	@Min(value = 50, message = "Minimum Course Capacity: 50")
+	@Min(value = 50, message = "Minimum Course Fees: 500")
 	private Integer courseFee;
 	
 	@Column(columnDefinition = "DATE NOT NULL")
@@ -74,6 +72,7 @@ public class Course {
 	
 	@Column(columnDefinition = "SMALLINT NOT NULL")
 	@NotNull(message = "Course Duration must not be empty")
+	@Min(value = 0, message = "Minimum Course Duration: 0")
 	private Integer courseDuration;
 	
 	/***

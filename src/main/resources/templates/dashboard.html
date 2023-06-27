@@ -318,7 +318,12 @@
                                                         <span th:case=3>Full</span>
                                                         <span th:case=4>Cancelled</span>
                                                     </td>
-                                                    <td>Detail</td>
+                                                    <td>
+                                                        <a th:href="@{/student/} + ${session.userId} + @{/course/} + ${course.id}"
+                                                        class="btn btn-info">
+                                                            <span>Detail</span>
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -337,7 +342,6 @@
                                                 <th>ID</th>
                                                 <th>Course Name</th>
                                                 <th>Start Date</th>
-                                                <th>Status</th>
                                                 <th>Action</th>
                                             </thead>
                                             <tbody>
@@ -345,13 +349,12 @@
                                                     <td th:text="${enrolledCourse.id}"></td>
                                                     <td th:text="${enrolledCourse.courseName}"></td>
                                                     <td th:text="${enrolledCourse.courseStartDate}"></td>
-                                                    <td th:switch="${enrolledCourse.courseStatus}">
-                                                        <span th:case=1>Available</span>
-                                                        <span th:case=2>Low Vacancy</span>
-                                                        <span th:case=3>Full</span>
-                                                        <span th:case=4>Cancelled</span>
+                                                    <td>
+                                                        <a th:href="@{/student/} + ${session.userId} + @{/course/} + ${enrolledCourse.id} "
+                                                            class="btn btn-info">
+                                                            <span>Detail</span>
+                                                        </a>
                                                     </td>
-                                                    <td>Detail</td>
                                                 </tr>
                                             </tbody>
                                         </table>

@@ -13,11 +13,11 @@
 
           <!--  HEADER -->
           <div class="header">
-	          <div>
-		          <h3 class="mb-3">
-		            Manage Enrollments
-		          </h3>
-			  </div>          
+            <div>
+              <h3 class="mb-3">
+                Manage Enrollments
+              </h3>
+            </div>          
 	          <a th:href="@{/{role}/{userId}/course(role=${session.role}, userId=${session.userId})}"
 	          	class="ms-auto">
 	          	<i class="bi bi-arrow-left-circle"></i>
@@ -28,7 +28,14 @@
           <!-- DATA TABLE -->
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title font-weight-bold">Manage Students</h4>
+              <div class="row">
+                <div class="col-md-9">
+                  <h4 class="card-title font-weight-bold">Manage Students</h4>
+                </div>
+                <div class="col-md-3">
+                  <a th:href="@{/admin/}+ ${session.userId} + @{/export/enrollments}" class="btn btn-warning float-right">Export All</a>
+                </div>
+              </div>
               <div class="table-responsive p-2">
                 <table class="table table-striped" id="data-table">
                   <thead>

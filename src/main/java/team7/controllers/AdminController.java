@@ -1,24 +1,32 @@
 package team7.controllers;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.opencsv.CSVWriter;
 
 import team7.models.Admin;
 import team7.models.Course;
@@ -30,9 +38,9 @@ import team7.services.AdminService;
 import team7.services.CourseService;
 import team7.services.EmailService;
 import team7.services.LecturerService;
+import team7.services.StudentService;
 import team7.services.StudentEnrollmentService;
 import team7.services.UpdateRequestService;
-import team7.validators.CourseValidator;
 
 @Controller
 @RequestMapping("/admin/{id}")
@@ -56,6 +64,9 @@ public class AdminController {
 	
 	@Autowired
 	LecturerService svcLecturer;
+
+	@Autowired
+	StudentService svcStudent;
 	
 	@Autowired
 	CourseController ctrlCourse;
@@ -71,8 +82,42 @@ public class AdminController {
 	/*** ADMIN ***/
 	@GetMapping("")
 	public String getAdminDashboard(@PathVariable Long id, Model model) {
-		Admin existingAdmin = svcAdmin.getAdminById(id); 
+		Admin existingAdmin = svcAdmin.getAdminById(id);
+
+		List<UpdateRequest> updateRequests = svcUpdateRequest.getAllUpdateRequests().stream()
+											.sorted(Comparator.comparing(UpdateRequest::getId).reversed())
+											.limit(5)
+											.toList();
+		
+		List<Course> courses = svcCourse.getAllCourses().stream()
+								.filter(course -> course.getCourseStatus() != 4)
+								.sorted(Comparator.comparing(Course::getCourseStartDate).reversed())
+								.limit(5)
+								.toList();
+
+		List<StudentEnrollment> enrollments = svcStudentEnrollment.getAllEnrollments().stream()
+								.filter(studentEnrollment -> studentEnrollment.getEnrollmentStatus() == 0 || studentEnrollment.getEnrollmentStatus() == 1 )
+								.sorted(Comparator.comparing(StudentEnrollment::getEnrollmentDate).reversed())
+								.limit(5)
+								.toList();
+		
+		Integer totalCourses = Math.toIntExact(svcCourse.getAllCourses().stream()
+								.filter(course -> course.getCourseStatus() != 4)
+								.count());
+		Integer totalLecturers = svcLecturer.getAllLecturers().size();
+		Integer totalStudents = svcStudent.getAllStudents().size();
+		Integer totalEnrollments = Math.toIntExact(svcStudentEnrollment.getAllEnrollments().stream()
+									.filter(studentEnrollment -> studentEnrollment.getEnrollmentStatus() == 0 || studentEnrollment.getEnrollmentStatus() == 1 )
+									.count());
+
 		model.addAttribute("admin", existingAdmin);
+		model.addAttribute("updateRequests", updateRequests);
+		model.addAttribute("courses", courses);
+		model.addAttribute("enrollments", enrollments);
+		model.addAttribute("totalCourses", totalCourses);
+		model.addAttribute("totalLecturers", totalLecturers);
+		model.addAttribute("totalStudents", totalStudents);
+		model.addAttribute("totalEnrollments", totalEnrollments);
 		return "dashboard";
 	}
 	
@@ -381,6 +426,244 @@ public class AdminController {
 		
 		svcUpdateRequest.changeUpdateRequestStatus(requestId, status);
 		return String.format("redirect:/admin/%d/request", adminId);
+	}
+
+	@GetMapping("/export/{type}")
+    public void exportToCSV(HttpServletResponse response, @PathVariable("type") String reportType) {
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormatter.format(new Date());
+		String csvFileName;
+
+        if (reportType.equals("courses")) {
+			csvFileName = "AllCourses.csv";
+
+			// Set the response content type for CSV
+        	response.setContentType("text/csv");
+
+			// Set the response headers for file download
+        	response.setHeader("Content-Disposition", "attachment; filename=" + currentDateTime + csvFileName);
+
+            try (CSVWriter writer = new CSVWriter(response.getWriter())) {
+				// Write the header row
+				String[] header = { "Course ID", "Lecturer", "Course Name", "Description", "Credits", "Capacity", "Fees", "Start Date", "Duration", "Status", "Number of Enrollments" };
+				writer.writeNext(header);
+
+				// Get the list of all courses
+				List<Course> allCourses = svcCourse.getAllCourses().stream()
+											.sorted(Comparator.comparingInt(course -> course.getEnrollment().size()))
+											.collect(Collectors.toList());
+				Collections.reverse(allCourses);
+
+				// Write the data rows
+				for (Course course : allCourses) {
+					String status;
+					if (course.getCourseStatus() == 1 ) {
+						status = "Available";
+					} else if (course.getCourseStatus() == 2 ) {
+						status = "Low Vacancy";
+					} else if (course.getCourseStatus() == 3 ) {
+						status = "Full";
+					} else {
+						status = "Cancelled";
+					}
+					Integer count = course.getEnrollment().size();
+					String[] rowData = {
+						String.valueOf(course.getId()),
+						course.getLecturer().getCode(),
+						course.getCourseName(),
+						course.getDescription(),
+						String.valueOf(course.getCourseCredits()),
+						String.valueOf(course.getCourseCapacity()),
+						String.valueOf(course.getCourseFee()),
+						String.valueOf(course.getCourseStartDate()),
+						String.valueOf(course.getCourseDuration()),
+						status,
+						String.valueOf(count)
+
+					};
+					writer.writeNext(rowData);
+				}
+			} catch (IOException e) {
+				// Handle the exception appropriately
+				e.printStackTrace();
+			}
+        } else if (reportType.equals("students")) {
+			csvFileName = "AllStudents.csv";
+
+			// Set the response content type for CSV
+        	response.setContentType("text/csv");
+
+			// Set the response headers for file download
+        	response.setHeader("Content-Disposition", "attachment; filename=" + currentDateTime + csvFileName);
+
+            try (CSVWriter writer = new CSVWriter(response.getWriter())) {
+				// Write the header row
+				String[] header = { "Student ID", "Matric Number", "Name", "Gender", "Date of Birth", "Email", "Phone" };
+				writer.writeNext(header);
+
+				// Get the list of all courses
+				List<Student> allStudents = svcStudent.getAllStudents();
+
+				// Write the data rows
+				for (Student student : allStudents) {
+					String[] rowData = {
+						String.valueOf(student.getId()),
+						student.getMatricNumber(),
+						student.getFirstName() + " " + student.getLastName(),
+						student.getGender(),
+						String.valueOf(student.getDob()),
+						student.getEmail(),
+						student.getPhone()
+
+					};
+					writer.writeNext(rowData);
+				}
+			} catch (IOException e) {
+				// Handle the exception appropriately
+				e.printStackTrace();
+			}
+        } else if (reportType.equals("lecturers")) {
+			csvFileName = "AllLecturers.csv";
+
+			// Set the response content type for CSV
+        	response.setContentType("text/csv");
+
+			// Set the response headers for file download
+        	response.setHeader("Content-Disposition", "attachment; filename=" + currentDateTime + csvFileName);
+
+            try (CSVWriter writer = new CSVWriter(response.getWriter())) {
+				// Write the header row
+				String[] header = { "Enrolment Id", "Course", "Student ID", "Matric Number", "Student Name", "Gender", "Date of Birth", "Email", "Phone", "Enrollment Status"};
+				writer.writeNext(header);
+
+				// Get the list of all courses
+				List<Lecturer> allLecturers = svcLecturer.getAllLecturers();
+
+				// Write the data rows
+				for (Lecturer lecturer : allLecturers) {
+					String title;
+					if (lecturer.getTitle() == 0 ) {
+						title = "Mr. ";
+					} else if (lecturer.getTitle() == 1 ) {
+						title = "Mrs. ";
+					} else {
+						title = "Ms. ";
+					}
+					String[] rowData = {
+						String.valueOf(lecturer.getId()),
+						lecturer.getCode(),
+						title + lecturer.getFirstName() + " " + lecturer.getLastName(),
+						lecturer.getDesignation(),
+						lecturer.getEmail(),
+						lecturer.getPhone()
+
+					};
+					writer.writeNext(rowData);
+				}
+			} catch (IOException e) {
+				// Handle the exception appropriately
+				e.printStackTrace();
+			}
+
+        } else if (reportType.equals("enrollments")) {
+			csvFileName = "AllEnrollments.csv";
+
+			// Set the response content type for CSV
+        	response.setContentType("text/csv");
+
+			// Set the response headers for file download
+        	response.setHeader("Content-Disposition", "attachment; filename=" + currentDateTime + csvFileName);
+
+            try (CSVWriter writer = new CSVWriter(response.getWriter())) {
+				// Write the header row
+				String[] header = { "Enrolment Id", "Course", "Student ID", "Matric Number", "Student Name", "Gender", "Date of Birth", "Email", "Phone", "Enrollment Status"};
+				writer.writeNext(header);
+
+					// Get the list of all courses
+				List<StudentEnrollment> enrolledStudents = svcStudentEnrollment.getAllEnrollments();
+
+				for (StudentEnrollment studentEnrollment : enrolledStudents) {
+					String status;
+					if (studentEnrollment.getEnrollmentStatus() == 0 ) {
+						status = "Pending";
+					} else if (studentEnrollment.getEnrollmentStatus() == 1 ) {
+						status = "Accepted";
+					} else if (studentEnrollment.getEnrollmentStatus() == 2 ) {
+						status = "Rejected";
+					} else {
+						status = "Cancelled";
+					}
+
+					String[] rowData = {
+						String.valueOf(studentEnrollment.getId()),
+						studentEnrollment.getCourse().getCourseName(),
+						String.valueOf(studentEnrollment.getStudent().getId()),
+						String.valueOf(studentEnrollment.getStudent().getMatricNumber()),
+						studentEnrollment.getStudent().getFirstName() + " " + studentEnrollment.getStudent().getLastName(),
+						studentEnrollment.getStudent().getGender(),
+						String.valueOf(studentEnrollment.getStudent().getDob()),
+						studentEnrollment.getStudent().getEmail(),
+						studentEnrollment.getStudent().getPhone(),
+						status
+					};
+					writer.writeNext(rowData);
+				}
+			} catch (IOException e) {
+				// Handle the exception appropriately
+				e.printStackTrace();
+			}
+		}
+    }
+
+	@GetMapping("/course/{courseId}/student/export")
+    public void exportEnrolledStudents(HttpServletResponse response,@PathVariable("courseId") Long courseId) {
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormatter.format(new Date());
+		String csvFileName = "EnrolledStudents.csv";
+
+		// Set the response content type for CSV
+		response.setContentType("text/csv");
+
+		// Set the response headers for file download
+		response.setHeader("Content-Disposition", "attachment; filename=" + currentDateTime + csvFileName);
+
+		try (CSVWriter writer = new CSVWriter(response.getWriter())) {
+			// Write the header row
+			String[] header = { "Enrolment Id", "Course", "Student ID", "Matric Number", "Student Name", "Gender", "Date of Birth", "Email", "Phone", "Enrollment Status"};
+			writer.writeNext(header);
+
+			// Get the list of all courses
+			List<StudentEnrollment> enrolledStudents = svcStudentEnrollment.getStudentEnrollmentsByCourse(courseId);
+			for (StudentEnrollment studentEnrollment : enrolledStudents) {
+				String status;
+				if (studentEnrollment.getEnrollmentStatus() == 0 ) {
+					status = "Pending";
+				} else if (studentEnrollment.getEnrollmentStatus() == 1 ) {
+					status = "Accepted";
+				} else if (studentEnrollment.getEnrollmentStatus() == 2 ) {
+					status = "Rejected";
+				} else {
+					status = "Cancelled";
+				}
+
+				String[] rowData = {
+					String.valueOf(studentEnrollment.getId()),
+					studentEnrollment.getCourse().getCourseName(),
+					String.valueOf(studentEnrollment.getStudent().getId()),
+					String.valueOf(studentEnrollment.getStudent().getMatricNumber()),
+					studentEnrollment.getStudent().getFirstName() + " " + studentEnrollment.getStudent().getLastName(),
+					studentEnrollment.getStudent().getGender(),
+					String.valueOf(studentEnrollment.getStudent().getDob()),
+					studentEnrollment.getStudent().getEmail(),
+					studentEnrollment.getStudent().getPhone(),
+					status
+				};
+				writer.writeNext(rowData);
+			}
+		} catch (IOException e) {
+			// Handle the exception appropriately
+			e.printStackTrace();
+		}
 	}
 	
 }

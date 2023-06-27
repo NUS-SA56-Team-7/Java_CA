@@ -18,12 +18,20 @@
           </h3>
 
           <!-- ACTION ROW -->
-          <div class="d-flex justify-content-between">
-            <a th:if="${session.role == 'admin'}" th:href="@{{baseURL}/create(baseURL=${#request.getRequestURI()})}"
-              class="btn btn-primary mb-3">
-              <i class="bi bi-person-add"></i>
-              Add New Course
-            </a>
+          <div class="d-flex row">
+            <div class="col-md-6">
+              <a th:if="${session.role == 'admin'}" th:href="@{{baseURL}/create(baseURL=${#request.getRequestURI()})}"
+                class="btn btn-primary mb-3">
+                <i class="bi bi-person-add"></i>
+                Add New Course
+              </a>
+            </div>
+            <div class="col-md-6">
+                <a th:if="${session.role == 'admin'}" th:href="@{/admin/}+ ${session.userId} + @{/export/courses}"
+                  class="btn btn-success mb-3 float-right">
+                  Export All
+                </a>
+            </div>
           </div>
 
           <!-- DATA TABLE -->

@@ -1,22 +1,17 @@
 package team7.controllers;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -53,8 +48,31 @@ public class StudentController {
 	/*** Functional Operations ***/
 	@GetMapping("")
 	public String getStudentDashboard(@PathVariable Long id, Model model) {
-		Student existingStudent = svcStudent.getStudentById(id); 
+		Student existingStudent = svcStudent.getStudentById(id);
+		List<Course> courses = svcCourse.getAllCourses().stream()
+								.filter(course -> course.getCourseStatus() != 4)
+								.sorted(Comparator.comparing(Course::getCourseStartDate).reversed())
+								.limit(5)
+								.toList();
+		List<Course> enrolledCourses = existingStudent.getStudentEnrollment().stream()
+								.filter(studentEnrollment -> studentEnrollment.getEnrollmentStatus() == 0 || studentEnrollment.getEnrollmentStatus() == 1 )
+								.map(StudentEnrollment::getCourse)
+								.sorted(Comparator.comparing(Course::getCourseStartDate).reversed())
+								.limit(5)
+								.toList();
+		Integer totalCourses = Math.toIntExact(svcCourse.getAllCourses().stream()
+										.filter(course -> course.getCourseStatus() != 4)
+										.count());
+		Integer totalEnrolledCourses = Math.toIntExact(existingStudent.getStudentEnrollment().stream()
+										.filter(studentEnrollment -> studentEnrollment.getEnrollmentStatus() == 0 || studentEnrollment.getEnrollmentStatus() == 1 )
+										.map(StudentEnrollment::getCourse)
+										.count());
+
 		model.addAttribute("student", existingStudent);
+		model.addAttribute("courses", courses);
+		model.addAttribute("enrolledCourses", enrolledCourses);
+		model.addAttribute("totalCourses", totalCourses);
+		model.addAttribute("totalEnrolledCourses", totalEnrolledCourses);
 		return "dashboard";
 	}
 	
@@ -143,7 +161,6 @@ public class StudentController {
 		svcStudentEnrollment.saveStudentEnrollment(courseId, studentId);
 		
 		Long vacancy = svcCourse.getCourseById(courseId).getCourseVacancy();
-		Integer capacity = svcCourse.getCourseById(courseId).getCourseCapacity();
 		if (vacancy == 1) {
 			svcCourse.updateCourseStatus(courseId, 3);
 		}

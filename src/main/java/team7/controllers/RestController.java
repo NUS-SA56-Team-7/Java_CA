@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import team7.models.Course;
 import team7.models.Lecturer;
 import team7.models.Student;
-import team7.models.StudentEnrollment;
 import team7.services.CourseService;
 import team7.services.LecturerService;
 import team7.services.StudentEnrollmentService;

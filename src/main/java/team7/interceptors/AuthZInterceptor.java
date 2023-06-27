@@ -9,8 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import team7.exceptions.UnauthorizedException;
-
 /*** Authorization Interceptor ***/
 /*** Blacklisting; Default Allow All ***/
 @Component

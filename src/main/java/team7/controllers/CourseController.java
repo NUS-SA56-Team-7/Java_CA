@@ -1,9 +1,6 @@
 package team7.controllers;
 
-import java.time.LocalDate;
 import java.util.List;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +14,6 @@ import team7.models.Lecturer;
 import team7.services.CourseService;
 import team7.services.LecturerService;
 import team7.services.StudentEnrollmentService;
-import team7.services.StudentGradeService;
 import team7.validators.CourseValidator;
 
 @Controller
@@ -29,9 +25,6 @@ public class CourseController {
 	
 	@Autowired
 	private LecturerService svcLecturer;
-	
-	@Autowired
-	private StudentGradeService svcStudentGrade;
 	
 	@Autowired
 	private StudentEnrollmentService svcStudentEnrollment;
@@ -49,8 +42,10 @@ public class CourseController {
 	public String getStudentsInCourse(Long courseId, Model model) {
 		List<StudentEnrollment> enrollments =
 				svcStudentEnrollment.getStudentEnrollmentsByCourse(courseId);
+		Integer countEnrollments = enrollments.size();
 		model.addAttribute("course", svcCourse.getCourseById(courseId));
 		model.addAttribute("enrollmentList", enrollments);
+		model.addAttribute("countEnrollments", countEnrollments);
 		return "student-enrollment-list";
 	}
 	

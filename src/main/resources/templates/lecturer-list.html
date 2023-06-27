@@ -28,7 +28,14 @@
           <!-- DATA TABLE -->
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title font-weight-bold">Lecturer List</h4>
+              <div class="row">
+                <div class="col-md-9">
+                  <h4 class="card-title font-weight-bold">Lecturer List</h4>
+                </div>
+                <div class="col-md-3">
+                  <a th:if="${session.role == 'admin'}" th:href="@{/admin/}+ ${session.userId} + @{/export/lecturers}" class="btn btn-warning float-right">Export All</a>
+                </div>
+              </div>
               <div class="table-responsive">
                 <table class="table border-bottom" id="data-table">
                   <thead>

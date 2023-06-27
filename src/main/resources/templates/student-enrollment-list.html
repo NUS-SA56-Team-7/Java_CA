@@ -111,6 +111,9 @@
                         <div class="col-md-9">
                             <h4 class="card-title font-weight-bold">Enrolled Students</h4>
                         </div>
+                        <div th:unless="${countEnrollments == 0 }" class="col-md-3">
+                            <a th:href="@{/admin/} + ${session.userId} + @{/course/} + ${course.id} + @{/student/export}" class="btn btn-warning float-right">Export Enrolled Students</a>
+                        </div>
                         <!-- ACTION ROW -->
                         <!-- <div class="col-md-3">
                             <a th:if="${session.role == 'admin'}"

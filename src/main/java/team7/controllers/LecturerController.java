@@ -1,5 +1,6 @@
 package team7.controllers;
 
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import team7.models.Course;
 import team7.models.Lecturer;
 import team7.models.Student;
+import team7.models.StudentEnrollment;
 import team7.models.StudentGrade;
 import team7.models.UpdateRequest;
 import team7.services.CourseService;
@@ -56,8 +58,32 @@ public class LecturerController {
 	/*** Functional Operations ***/
 	@GetMapping("")
 	public String getLecturerDashboard(@PathVariable Long id, Model model) {
-		Lecturer existingLecturer = svcLecturer.getLecturerById(id); 
+		Lecturer existingLecturer = svcLecturer.getLecturerById(id);
+		List<Course> courses = existingLecturer.getCourses().stream()
+								.filter(course -> course.getCourseStatus() != 4)
+								.sorted(Comparator.comparing(Course::getCourseStartDate).reversed())
+								.limit(5)
+								.toList();
+		List<StudentEnrollment> enrolledStudents = existingLecturer.getCourses().stream()
+													.flatMap(course -> course.getEnrollment().stream())
+													.filter(studentEnrollment -> studentEnrollment.getEnrollmentStatus() == 0 || studentEnrollment.getEnrollmentStatus() == 1 )
+													.sorted(Comparator.comparing(StudentEnrollment::getEnrollmentDate).reversed())
+													.limit(5)
+													.toList();
+
+		Integer totalCourses = Math.toIntExact(existingLecturer.getCourses().stream()
+								.filter(course -> course.getCourseStatus() != 4)
+								.count());
+		Integer totalEnrolled = Math.toIntExact(existingLecturer.getCourses().stream()
+								.flatMap(course -> course.getEnrollment().stream())
+								.filter(studentEnrollment -> studentEnrollment.getEnrollmentStatus() == 0 || studentEnrollment.getEnrollmentStatus() == 1 )
+								.count());
+
 		model.addAttribute("lecturer", existingLecturer);
+		model.addAttribute("courses", courses);
+		model.addAttribute("enrolledStudents", enrolledStudents);
+		model.addAttribute("totalCourses", totalCourses);
+		model.addAttribute("totalEnrolled", totalEnrolled);
 		return "dashboard";
 	}
 	
